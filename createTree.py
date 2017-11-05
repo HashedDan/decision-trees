@@ -30,9 +30,6 @@ print("* df.tail()", df.tail(), sep="\n", end="\n\n")
 y = df['Total Grads - % of cohort']
 x = df[['asian_per', 'total_enrollment','grade12']]
 
-print(x)
-# print('-----------')
-# print(y)
 
 dt = DecisionTreeRegressor()
 dt.fit(x, y)
@@ -40,8 +37,9 @@ dt.fit(x, y)
 features = list(x)
 print(features)
 
-with open("dt.dot", 'w') as f:
+with open("NYCSchools.dot", 'w') as f:
     export_graphviz(dt, out_file=f, feature_names=features)
 
-graph = pydotplus.graph_from_dot_file("dt.dot")
-graph.write_png("dtree.png")
+command = ["dot", "-Tpng", "NYCSchools.dot", "-o", "NYCSchools.png"]
+
+subprocess.check_call(command)
